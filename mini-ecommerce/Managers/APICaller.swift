@@ -36,7 +36,7 @@ class APICaller {
       }
   }
   
-  func getDetailProduct(with id: Int, completion: @escaping (Result<[Product], Error>) -> Void) {
+  func getDetailProduct(with id: Int, completion: @escaping (Result<Product, Error>) -> Void) {
     let url = "\(constans.baseURL)/\(id)"
     AF.request(url, method: .get, encoding: URLEncoding.default)
       .validate(statusCode: 200..<300)
@@ -46,13 +46,12 @@ class APICaller {
           do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let result = try decoder.decode([Product].self, from: data)
+            let result = try decoder.decode(Product.self, from: data)
             completion(.success(result))
           } catch {
             completion(.failure(error))
           }
         case .failure(let error):
-          print("✅")
           completion(.failure(error))
         }
       }

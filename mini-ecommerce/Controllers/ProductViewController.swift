@@ -54,13 +54,8 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let model = products[indexPath.row]
-    let detailProductViewController = DetailProductViewController()
-    detailProductViewController.HeroImageView.sd_setImage(with: URL(string: model.image))
-    detailProductViewController.titleLabel.text = model.title
-    detailProductViewController.rateLabel.text = "\(model.rating.rate)"
-    detailProductViewController.priceLabel.text = "\(model.price)"
-    detailProductViewController.descriptionLabel.text = model.description
+    let productId = products[indexPath.row].id
+    let detailProductViewController = DetailProductViewController(with: productId)
     navigationController?.pushViewController(detailProductViewController, animated: true)
   }
   
